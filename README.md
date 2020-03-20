@@ -6,7 +6,7 @@ Run a command against a remote Docker daemon by tunneling over SSH.
 
 Since Docker 18.09, the Docker CLI has supported using a remote Docker Daemon over SSH by setting `DOCKER_HOST=ssh://user@host`. It is usually much faster to build the image remotely than to build it locally and copy it with `docker save` and SSH.
 
-However, some tools (build plugins etc.) do not yet support the ssh protocol. This offers an alternative until it is widely available.
+However, some tools (build plugins etc.) do not yet support the ssh protocol. This offers an alternative until it is widely supported.
 
 # Installation
 
