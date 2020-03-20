@@ -19,7 +19,7 @@ done
 REMOTE=${SSH_ARGS[${#SSH_ARGS[@]}-1]}
 
 if [ ${#SSH_ARGS[@]} -eq 0 ] || [ ${#CMD_ARGS[@]} -eq 0 ] || [[ ${REMOTE} != *"@"* ]]; then
-  echo "Usage: $0 <ssh arguments e.g. <private key> user@host -- <command to execute>"
+  echo "Usage: $0 <ssh arguments> user@host -- <command to execute>"
   exit 1
 fi
 
