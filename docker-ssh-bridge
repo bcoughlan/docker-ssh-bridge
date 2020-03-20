@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Enable strict mode
+set -euo pipefail
+
+SSH_ARGS=()
+
+while [ $# -gt 0 ]; do
+  if [ "$1" == "--" ]; then
+    shift
+    CMD_ARGS=( "$@" )
+    break
+  fi
+
+  SSH_ARGS+=( "$1" )
+  shift
+done
+
+REMOTE=${SSH_ARGS[${#SSH_ARGS[@]}-1]}
+
+if [ ${#SSH_ARGS[@]} -eq 0 ] || [ ${#CMD_ARGS[@]} -eq 0 ] || [[ ${REMOTE} != *"@"* ]]; then
+  echo "Usage: $0 <ssh arguments e.g. <private key> user@host -- <command to execute>"
+  exit 1
+fi
+
+function ssh_forward_docker_daemon {
+  SSH_SOCKET=$(mktemp)
+  rm "$SSH_SOCKET"
+
+  LOCAL_SOCKET=$(mktemp)
+  rm "$LOCAL_SOCKET"
+
+  trap "exit" INT TERM
+  trap "ssh -q -S $SSH_SOCKET -O exit $REMOTE" EXIT
+  ssh -S "$SSH_SOCKET" -f -M -NL "$LOCAL_SOCKET":/var/run/docker.sock "$@"
+  export DOCKER_HOST="unix://$LOCAL_SOCKET"
+}
+ssh_forward_docker_daemon "${SSH_ARGS[@]}"
+
+eval "${CMD_ARGS[@]}"
