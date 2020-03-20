@@ -23,7 +23,7 @@ docker-ssh-bridge <ssh arguments e.g. <private key> user@host -- <command to exe
 e.g.
 
 ```
-docker-ssh-bridge ~/.ssh/key.pem user@host -- docker build -f Dockerfile .
+docker-ssh-bridge -i ~/.ssh/key.pem user@host -- docker build -f Dockerfile .
 ```
 
 The SSH user must be a member of the `docker` group as described here: https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user
