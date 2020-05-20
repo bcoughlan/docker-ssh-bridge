@@ -14,6 +14,8 @@ However, some tools (build plugins etc.) do not yet support the ssh protocol. Th
 wget -q https://raw.githubusercontent.com/bcoughlan/docker-ssh-bridge/master/docker-ssh-bridge -O/usr/local/bin/docker-ssh-bridge && chmod +x /usr/local/bin/docker-ssh-bridge
 ```
 
+Important: The SSH user must be a member of the `docker` group as described here: https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user
+
 # Usage
 
 ```
@@ -25,8 +27,6 @@ e.g.
 ```
 docker-ssh-bridge -i ~/.ssh/key.pem user@host -- docker build -f Dockerfile .
 ```
-
-The SSH user must be a member of the `docker` group as described here: https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user
 
 # How it works
 
